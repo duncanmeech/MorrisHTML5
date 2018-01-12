@@ -1757,10 +1757,6 @@ MorrisEngine.prototype.WillUnTriple = function(s, color)
 //
 MorrisEngine.prototype.NewGame = function()
 {
-    // reset positions history
-
-    this.nextPositionHistory = 0;
-
     // keep a separate list of the valid squares for faster lookup
 
     this.squares = [];
@@ -1976,7 +1972,7 @@ MorrisEngine.prototype.positionHistory = [];
 // add the given move and position hash to the history of moves. So allows for takeback.
 // we also record the current game hash so we can check for draw by repetition
 //
-MorrisEngine.prototype.AddToHistory = function(m,h)
+MorrisEngine.prototype.AddToHistory = function(m)
 {
     // add to move list
 
@@ -1984,7 +1980,7 @@ MorrisEngine.prototype.AddToHistory = function(m,h)
 
     // increment count for this position in reps table
 
-    this.positionHistory.push(h);
+    this.positionHistory.push(this.gameHash);
 }
 
 //
@@ -2054,7 +2050,7 @@ MorrisEngine.prototype.Repetitions = function()
 {
     var count = 0;
 
-    for (var i = 0; i < this.nextPositionHistory; i++)
+    for (var i = 0; i < this.positionHistory.length; i++)
         if (this.positionHistory[i] == this.gameHash)
             count++;
 
